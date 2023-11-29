@@ -1,0 +1,71 @@
+<button mat-button (click)="addToArray()">Add Name</button>
+<mat-accordion [formGroup]="master">
+  <mat-expansion-panel style="border-radius: unset;" formArrayName="forms"
+    *ngFor="let form of master.get('forms').controls; let i = index">
+
+    <mat-expansion-panel-header style="background-color: rgb(0, 125, 185); color: #99cbe3;">
+      <mat-panel-title style="color: white;">
+        {{form.get('name').value || "Name"}}
+      </mat-panel-title>
+
+      <mat-panel-title style="color: white;">
+        {{form.get('activityCompCode').value}}
+        <span *ngIf="form.get('activityCompCode').value">
+          , ${{form.get('amount').value}}
+        </span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <form [formGroupName]="i" style="padding-top: 1rem;">
+
+      <span style="padding-right: 1rem">
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="Name" formControlName="name" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions[i]" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </span>
+
+      <span style="padding-right: 1rem">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Activity Date" formControlName="activityDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </span>
+
+      <span>
+        <mat-form-field class="example-full-width">
+          <mat-label>Compensation Type</mat-label>
+          <mat-select formControlName="compensationType">
+            <mat-option *ngFor="let option of compensationTypes.types" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+
+      <br>
+
+      <span>
+        <mat-form-field class="example-full-width" style="padding-right: 1rem">
+          <mat-label>Activity or Compensation Code</mat-label>
+          <mat-select formControlName="activityCompCode">
+            <mat-option *ngFor="let option of activityCompCodes.codes" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+
+      <app-rate-form [parentForm]="form"></app-rate-form>
+
+      <br>
+      <app-child-form [parentForm]="form"></app-child-form>
+
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

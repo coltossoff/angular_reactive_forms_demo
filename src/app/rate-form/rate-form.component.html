@@ -1,0 +1,13 @@
+<span style="padding-right: 1rem">Rate: {{this.rate}}</span>
+
+<span style="padding-right: 1rem">
+  <mat-form-field class="example-full-width" [formGroup]="parentForm">
+    <input matInput type="number" step=".0001" placeholder="Unit(s)" formControlName="units">
+  </mat-form-field>
+</span>
+
+<span>
+  <mat-form-field class="example-full-width" [formGroup]="parentForm">
+    <input matInput type="number" step=".0001" placeholder="Amount" formControlName="amount">
+  </mat-form-field>
+</span>
